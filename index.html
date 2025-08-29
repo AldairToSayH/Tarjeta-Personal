@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>qwert - xyz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body, html {
+      height: 100%;
+      width: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+      cursor: url("https://r2.guns.lol/c02db1bf-0906-4d43-b881-4fe005c21404.webp") 16 16, auto;
+    }
+
+    .screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.8s ease;
+    }
+    
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Primera pantalla - Intro */
+    #intro {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url("https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80") center/cover no-repeat fixed;
+      flex-direction: column;
+      text-align: center;
+      cursor: inherit;
+    }
+    
+    #intro h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    }
+    
+    #intro p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+    
+    .enter-btn {
+      padding: 12px 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: inherit;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    .enter-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* Segunda pantalla - Principal */
+    #main {
+      background: url("3d-cubes.jpg") center/cover no-repeat fixed;
+      flex-direction: column;
+      text-align: center;
+      cursor: inherit;
+    }
+    
+    #profile {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      max-width: 500px;
+      width: 90%;
+      margin-bottom: 2rem;
+    }
+    
+    #profile img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      margin-bottom: 20px;
+      border: 3px solid white;
+      object-fit: cover;
+    }
+    
+    #profile h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    #profile p {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+    
+    #links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    #links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      cursor: inherit;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    #links a i {
+      margin-right: 8px;
+    }
+    
+    #links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      #intro h1 {
+        font-size: 2.5rem;
+      }
+      
+      #intro p {
+        font-size: 1.2rem;
+      }
+      
+      #profile {
+        padding: 1.5rem;
+      }
+      
+      #profile h1 {
+        font-size: 2rem;
+      }
+      
+      #links {
+        flex-direction: column;
+        width: 80%;
+      }
+      
+      #links a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla de entrada -->
+  <div id="intro" class="screen">
+    <h1>EfiminenDev</h1>
+    <p>Haz clic para entrar a mi portafolio</p>
+    <button class="enter-btn">Click to enter</button>
+  </div>
+
+  <!-- Pantalla principal -->
+  <div id="main" class="screen hidden">
+    <div id="profile">
+      <img src="asd1.png" alt="avatar">
+      <h1>Aldair Zavala</h1>
+      <p><i class="fas fa-laptop-code"></i> Ciberseguridad | Pentester Junior | Linux</p>
+      <p><i class="fab fa-spotify"></i></i> Desarrollador Web</p>
+    </div>
+    <div id="links">
+      <a href="https://www.linkedin.com/in/aldair-zavala-h-b18a68378" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://github.com/AldairToSayH" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+      <a href="https://www.instagram.com/dairal_dl.z/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="mailto:zavalapisxlpo@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Correo</a>
+    </div>
+  </div>
+
+  <!-- Audio oculto -->
+  <audio id="bg-music" loop>
+    <source src="Let You Down (mp3cut.net).mp3">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  
+  <div class="music-control" id="music-toggle">
+    <i class="fas fa-volume-up"></i>
+  </div>
+
+  <script>
+    const intro = document.getElementById("intro");
+    const main = document.getElementById("main");
+    const music = document.getElementById("bg-music");
+    const enterBtn = document.querySelector('.enter-btn');
+    const musicToggle = document.getElementById('music-toggle');
+    let musicPlaying = false;
+    
+    // Función para entrar a la página principal
+    function enterSite() {
+      intro.classList.add("hidden");
+      main.classList.remove("hidden");
+      
+      // Intentar reproducir música (los navegadores requieren interacción del usuario)
+      const playPromise = music.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(_ => {
+            musicPlaying = true;
+          })
+          .catch(error => {
+            console.log("Reproducción automática prevenida por el navegador.");
+            musicToggle.style.display = 'none';
+          });
+      }
+    }
+    
+    // Event listeners
+    intro.addEventListener("click", enterSite);
+    enterBtn.addEventListener("click", enterSite);
+    
+    // Control de música
+    musicToggle.addEventListener('click', function() {
+      if (musicPlaying) {
+        music.pause();
+        musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      } else {
+        music.play();
+        musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+      }
+      musicPlaying = !musicPlaying;
+    });
+    
+    // Precargar la música para una reproducción más suave
+    window.addEventListener('load', function() {
+      music.load();
+    });
+  </script>
+</body>
+</html>
