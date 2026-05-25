@@ -43,6 +43,7 @@ html {
   font-size: 3.5rem;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  animation: titleFlicker 1.6s ease-in-out infinite;
 }
 
 #intro p {
@@ -61,26 +62,79 @@ html {
   margin-top: 0.5rem;
 }
 
+.enter-btn {
+  margin-top: 1.2rem;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid #7af2ff;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(122, 242, 255, 0.2), rgba(157, 255, 122, 0.18));
+  color: #f5fbff;
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(122, 242, 255, 0.35), inset 0 0 10px rgba(122, 242, 255, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  animation: enterPulse 1.4s ease-in-out infinite;
+}
+
+.enter-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 26px rgba(122, 242, 255, 0.5), inset 0 0 14px rgba(157, 255, 122, 0.25);
+  background: linear-gradient(135deg, rgba(122, 242, 255, 0.28), rgba(157, 255, 122, 0.24));
+}
+
+.hidden-enter {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.show-enter {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .loader-lines p {
   margin: 0.3rem 0;
   opacity: 0;
-  animation: loaderLineFade 0.9s ease forwards;
+  animation: loaderLineFade 0.45s ease forwards;
 }
 
 .loader-lines p:nth-child(1) {
-  animation-delay: 0.6s;
+  animation-delay: 0.2s;
 }
 
 .loader-lines p:nth-child(2) {
-  animation-delay: 1.8s;
+  animation-delay: 0.6s;
 }
 
 .loader-lines p:nth-child(3) {
-  animation-delay: 3s;
+  animation-delay: 1s;
 }
 
 .loader-lines p:nth-child(4) {
-  animation-delay: 4.2s;
+  animation-delay: 1.4s;
+}
+
+.loader-bar-wrap {
+  width: min(90vw, 460px);
+  height: 10px;
+  border: 1px solid rgba(122, 242, 255, 0.6);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 0 14px rgba(122, 242, 255, 0.35);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.loader-bar {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7af2ff, #9dff7a);
+  box-shadow: 0 0 16px rgba(157, 255, 122, 0.7);
+  animation: progressFill 2s linear forwards;
 }
 
 @keyframes loaderLineFade {
@@ -92,6 +146,45 @@ html {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes titleFlicker {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes enterPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
   }
 }
 

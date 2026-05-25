@@ -2,13 +2,14 @@ const intro = document.getElementById("intro");
 const main = document.getElementById("main");
 const music = document.getElementById("bg-music");
 const musicToggle = document.getElementById("music-toggle");
+const enterBtn = document.getElementById("enter-btn");
 const bootStart = performance.now();
-const targetLoaderTime = 5100;
-const minLoaderTime = 5100;
-const maxLoaderTime = 5100;
+const targetLoaderTime = 2000;
+const minLoaderTime = 1700;
+const maxLoaderTime = 2000;
 
 let musicPlaying = false;
-let autoplayBlocked = false;
+let hasEntered = false;
 
 function syncMusicIcon() {
   musicToggle.innerHTML = musicPlaying
@@ -23,34 +24,23 @@ function tryStartMusic() {
     playPromise
       .then(() => {
         musicPlaying = true;
-        autoplayBlocked = false;
         syncMusicIcon();
       })
       .catch(() => {
         musicPlaying = false;
-        autoplayBlocked = true;
         syncMusicIcon();
-        console.log("Reproduccion automatica prevenida por el navegador.");
+        console.log("No se pudo iniciar la musica.");
       });
   }
 }
 
-function unlockMusicOnFirstInteraction() {
-  if (!musicPlaying) {
-    tryStartMusic();
-  }
-}
-
 function enterSite() {
+  if (hasEntered) {
+    return;
+  }
+  hasEntered = true;
   intro.classList.add("hidden");
   main.classList.remove("hidden");
-}
-
-function startMusicAggressive() {
-  music.preload = "auto";
-  music.muted = false;
-  music.volume = 1;
-  tryStartMusic();
 }
 
 musicToggle.addEventListener("click", () => {
@@ -64,28 +54,23 @@ musicToggle.addEventListener("click", () => {
   syncMusicIcon();
 });
 
-window.addEventListener("DOMContentLoaded", startMusicAggressive);
+enterBtn.addEventListener("click", () => {
+  music.muted = false;
+  music.volume = 1;
+  tryStartMusic();
+  enterSite();
+});
 
 window.addEventListener("load", () => {
-  startMusicAggressive();
+  music.load();
+  music.preload = "auto";
   syncMusicIcon();
-
-  ["pointerdown", "keydown", "touchstart"].forEach((eventName) => {
-    document.addEventListener(eventName, unlockMusicOnFirstInteraction, { once: true });
-  });
 
   const elapsed = performance.now() - bootStart;
   const delay = Math.min(maxLoaderTime, Math.max(minLoaderTime, targetLoaderTime - elapsed));
 
   setTimeout(() => {
-    enterSite();
+    enterBtn.classList.remove("hidden-enter");
+    enterBtn.classList.add("show-enter");
   }, delay);
-});
-
-window.addEventListener("pageshow", startMusicAggressive);
-
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && (!musicPlaying || autoplayBlocked)) {
-    startMusicAggressive();
-  }
 });
