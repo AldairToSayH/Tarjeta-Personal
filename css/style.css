@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  overflow: hidden;
+  cursor: url("https://r2.guns.lol/c02db1bf-0906-4d43-b881-4fe005c21404.webp") 16 16, auto;
+}
+
+.screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.8s ease;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#intro {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80") center/cover no-repeat fixed;
+  flex-direction: column;
+  text-align: center;
+  cursor: inherit;
+}
+
+#intro h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+#intro p {
+  font-size: 1rem;
+  margin-bottom: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+#loader-text {
+  min-height: 6rem;
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  text-align: left;
+  width: min(90vw, 460px);
+  margin-top: 0.5rem;
+}
+
+.loader-lines p {
+  margin: 0.3rem 0;
+  opacity: 0;
+  animation: loaderLineFade 0.9s ease forwards;
+}
+
+.loader-lines p:nth-child(1) {
+  animation-delay: 0.6s;
+}
+
+.loader-lines p:nth-child(2) {
+  animation-delay: 1.8s;
+}
+
+.loader-lines p:nth-child(3) {
+  animation-delay: 3s;
+}
+
+.loader-lines p:nth-child(4) {
+  animation-delay: 4.2s;
+}
+
+@keyframes loaderLineFade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#main {
+  background: url("../image/3d-cubes.jpg") center/cover no-repeat fixed;
+  flex-direction: column;
+  text-align: center;
+  cursor: inherit;
+}
+
+#profile {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  width: 90%;
+  margin-bottom: 2rem;
+}
+
+#profile img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20px;
+  border: 3px solid white;
+  object-fit: cover;
+}
+
+#profile h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+#profile p {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+#links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+#links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  cursor: inherit;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+#links a i {
+  margin-right: 8px;
+}
+
+#links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  #intro h1 {
+    font-size: 2.5rem;
+  }
+
+  #intro p {
+    font-size: 0.9rem;
+  }
+
+  #profile {
+    padding: 1.5rem;
+  }
+
+  #profile h1 {
+    font-size: 2rem;
+  }
+
+  #links {
+    flex-direction: column;
+    width: 80%;
+  }
+
+  #links a {
+    width: 100%;
+  }
+}
