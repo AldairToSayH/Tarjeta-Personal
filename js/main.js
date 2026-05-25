@@ -2,7 +2,6 @@ const intro = document.getElementById("intro");
 const main = document.getElementById("main");
 const music = document.getElementById("bg-music");
 const musicToggle = document.getElementById("music-toggle");
-const enterBtn = document.getElementById("enter-btn");
 const bootStart = performance.now();
 const targetLoaderTime = 5100;
 const minLoaderTime = 5100;
@@ -10,8 +9,6 @@ const maxLoaderTime = 5100;
 
 let musicPlaying = false;
 let autoplayBlocked = false;
-let hasEntered = false;
-let introTimeoutId;
 
 function syncMusicIcon() {
   musicToggle.innerHTML = musicPlaying
@@ -45,15 +42,6 @@ function unlockMusicOnFirstInteraction() {
 }
 
 function enterSite() {
-  if (hasEntered) {
-    return;
-  }
-  hasEntered = true;
-
-  if (introTimeoutId) {
-    clearTimeout(introTimeoutId);
-  }
-
   intro.classList.add("hidden");
   main.classList.remove("hidden");
 }
@@ -76,13 +64,6 @@ musicToggle.addEventListener("click", () => {
   syncMusicIcon();
 });
 
-enterBtn.addEventListener("click", () => {
-  if (!musicPlaying) {
-    startMusicAggressive();
-  }
-  enterSite();
-});
-
 window.addEventListener("DOMContentLoaded", startMusicAggressive);
 
 window.addEventListener("load", () => {
@@ -96,7 +77,7 @@ window.addEventListener("load", () => {
   const elapsed = performance.now() - bootStart;
   const delay = Math.min(maxLoaderTime, Math.max(minLoaderTime, targetLoaderTime - elapsed));
 
-  introTimeoutId = setTimeout(() => {
+  setTimeout(() => {
     enterSite();
   }, delay);
 });

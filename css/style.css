@@ -61,22 +61,6 @@ html {
   margin-top: 0.5rem;
 }
 
-.enter-btn {
-  margin-top: 1rem;
-  padding: 10px 22px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  background: rgba(0, 0, 0, 0.35);
-  color: #fff;
-  border-radius: 6px;
-  letter-spacing: 0.08em;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.enter-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
 .loader-lines p {
   margin: 0.3rem 0;
   opacity: 0;
