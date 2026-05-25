@@ -9,6 +9,35 @@ const maxLoaderTime = 5100;
 
 let musicPlaying = false;
 
+function syncMusicIcon() {
+  musicToggle.innerHTML = musicPlaying
+    ? '<i class="fas fa-volume-up"></i>'
+    : '<i class="fas fa-volume-mute"></i>';
+}
+
+function tryStartMusic() {
+  const playPromise = music.play();
+
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        musicPlaying = true;
+        syncMusicIcon();
+      })
+      .catch(() => {
+        musicPlaying = false;
+        syncMusicIcon();
+        console.log("Reproduccion automatica prevenida por el navegador.");
+      });
+  }
+}
+
+function unlockMusicOnFirstInteraction() {
+  if (!musicPlaying) {
+    tryStartMusic();
+  }
+}
+
 function enterSite() {
   intro.classList.add("hidden");
   main.classList.remove("hidden");
@@ -17,29 +46,24 @@ function enterSite() {
 musicToggle.addEventListener("click", () => {
   if (musicPlaying) {
     music.pause();
-    musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+    musicPlaying = false;
   } else {
     music.play();
-    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+    musicPlaying = true;
   }
-  musicPlaying = !musicPlaying;
+  syncMusicIcon();
 });
 
 window.addEventListener("load", () => {
   music.load();
 
-  const playPromise = music.play();
-  if (playPromise !== undefined) {
-    playPromise
-      .then(() => {
-        musicPlaying = true;
-        musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-      })
-      .catch(() => {
-        musicPlaying = false;
-        console.log("Reproduccion automatica prevenida por el navegador.");
-      });
-  }
+  music.muted = false;
+  tryStartMusic();
+  syncMusicIcon();
+
+  ["pointerdown", "keydown", "touchstart"].forEach((eventName) => {
+    document.addEventListener(eventName, unlockMusicOnFirstInteraction, { once: true });
+  });
 
   const elapsed = performance.now() - bootStart;
   const delay = Math.min(maxLoaderTime, Math.max(minLoaderTime, targetLoaderTime - elapsed));
