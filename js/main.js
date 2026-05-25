@@ -8,6 +8,7 @@ const minLoaderTime = 5100;
 const maxLoaderTime = 5100;
 
 let musicPlaying = false;
+let autoplayBlocked = false;
 
 function syncMusicIcon() {
   musicToggle.innerHTML = musicPlaying
@@ -22,10 +23,12 @@ function tryStartMusic() {
     playPromise
       .then(() => {
         musicPlaying = true;
+        autoplayBlocked = false;
         syncMusicIcon();
       })
       .catch(() => {
         musicPlaying = false;
+        autoplayBlocked = true;
         syncMusicIcon();
         console.log("Reproduccion automatica prevenida por el navegador.");
       });
@@ -43,6 +46,13 @@ function enterSite() {
   main.classList.remove("hidden");
 }
 
+function startMusicAggressive() {
+  music.preload = "auto";
+  music.muted = false;
+  music.volume = 1;
+  tryStartMusic();
+}
+
 musicToggle.addEventListener("click", () => {
   if (musicPlaying) {
     music.pause();
@@ -54,11 +64,10 @@ musicToggle.addEventListener("click", () => {
   syncMusicIcon();
 });
 
-window.addEventListener("load", () => {
-  music.load();
+window.addEventListener("DOMContentLoaded", startMusicAggressive);
 
-  music.muted = false;
-  tryStartMusic();
+window.addEventListener("load", () => {
+  startMusicAggressive();
   syncMusicIcon();
 
   ["pointerdown", "keydown", "touchstart"].forEach((eventName) => {
@@ -71,4 +80,12 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     enterSite();
   }, delay);
+});
+
+window.addEventListener("pageshow", startMusicAggressive);
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && (!musicPlaying || autoplayBlocked)) {
+    startMusicAggressive();
+  }
 });
